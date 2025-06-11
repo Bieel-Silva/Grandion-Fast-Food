@@ -1,4 +1,5 @@
 ﻿using Grandion_Fast_Food.Repositores;
+using Grandion_Fast_Food.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Grandion_Fast_Food.Controllers
@@ -14,10 +15,16 @@ namespace Grandion_Fast_Food.Controllers
 
         public IActionResult List()
         {
-         
 
-            var lanches = _lancheRepository.Lanches;
-            return View(lanches);
+
+            //var lanches = _lancheRepository.Lanches;
+            //return View(lanches);
+
+            var lanchesListViewModel = new LancheListViewModel();
+            lanchesListViewModel.Lanches = _lancheRepository.Lanches;
+            lanchesListViewModel.CategoriaAtual = "Categoria Atual";
+
+            return View(lanchesListViewModel);
         }   
     }
 }
