@@ -1,6 +1,6 @@
 ﻿using Grandion_Fast_Food.Context;
 using Grandion_Fast_Food.Models;
-using Grandion_Fast_Food.Repositores.Interfaces;
+using Grandion_Fast_Food.Repositories.Interfaces;
 
 namespace Grandion_Fast_Food.Repositores
 {

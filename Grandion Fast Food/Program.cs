@@ -1,14 +1,11 @@
-using Microsoft.AspNetCore.Hosting;
+using Grandion_Fast_Food;
 
-namespace Grandion_Fast_Food;
-
+namespace LanchesMac;
 public class Program
 {
     public static void Main(string[] args)
     {
-        CreateHostBuilder(args)
-           .Build()
-           .Run();
+        CreateHostBuilder(args).Build().Run();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -18,4 +15,3 @@ public class Program
                 webBuilder.UseStartup<Startup>();
             });
 }
-

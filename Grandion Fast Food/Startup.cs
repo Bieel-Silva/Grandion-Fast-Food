@@ -1,6 +1,8 @@
 ﻿using Grandion_Fast_Food.Context;
+using Grandion_Fast_Food.Models;
 using Grandion_Fast_Food.Repositores;
-using Grandion_Fast_Food.Repositores.Interfaces;
+using Grandion_Fast_Food.Repositories.Interfaces;
+using LanchesMac.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Grandion_Fast_Food
@@ -19,9 +21,13 @@ namespace Grandion_Fast_Food
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<ILancheRepository, LancheRepository>();
+
+
+
+            services.AddScoped<ILancheRepository, LancheRepository>();
             services.AddTransient<ICategoriarepository, CategoriaRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
+            services.AddScoped(sp => CarrinhoCompra.GetCarrinhoCompra(sp));
 
             services.AddControllersWithViews();
             services.AddMemoryCache();

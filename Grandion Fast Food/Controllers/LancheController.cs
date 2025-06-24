@@ -1,4 +1,4 @@
-﻿using Grandion_Fast_Food.Repositores;
+﻿using Grandion_Fast_Food.Repositories.Interfaces;
 using Grandion_Fast_Food.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
