@@ -108,5 +108,10 @@ namespace Grandion_Fast_Food.Models
                 .Select(c => c.Lanche.Preco * c.Quantidade).Sum();
             return total;
         }
+
+        internal object GetCarrinhoCompraItem()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
