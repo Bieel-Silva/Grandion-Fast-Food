@@ -6,6 +6,5 @@ namespace Grandion_Fast_Food.ViewModels
     {
         public CarrinhoCompra CarrinhoCompra { get; set; }
         public decimal CarrinhoCompraTotal { get; set; }
-
     }
 }

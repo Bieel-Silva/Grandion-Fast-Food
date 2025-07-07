@@ -6,11 +6,11 @@ namespace Grandion_Fast_Food.Models
     [Table("CarrinhoCompraItem")]
     public class CarrinhoCompraItem
     {
-        public int CarrinhoCompraItemId { get; set; }   
+        public int CarrinhoCompraItemId { get; set; }
         public Lanche Lanche { get; set; }
         public int Quantidade { get; set; }
-       
+
         [StringLength(200)]
-        public string CarrinhoCompraId { get; set; }    
+        public string CarrinhoCompraId { get; set; }
     }
 }

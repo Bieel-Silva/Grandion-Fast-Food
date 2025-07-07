@@ -6,7 +6,7 @@ namespace Grandion_Fast_Food.Models
 {
     public class CarrinhoCompra
     {
-        public readonly AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public CarrinhoCompra(AppDbContext context)
         {
@@ -15,17 +15,22 @@ namespace Grandion_Fast_Food.Models
 
         public string CarrinhoCompraId { get; set; }
         public List<CarrinhoCompraItem> CarrinhoCompraItems { get; set; }
-
-        public static CarrinhoCompra GetCarrinhoCompra(IServiceProvider services)
+        public static CarrinhoCompra GetCarrinho(IServiceProvider services)
         {
+            //define uma sessão
             ISession session =
                 services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
 
-            var context =
-                services.GetService<AppDbContext>();
+            //obtem um serviço do tipo do nosso contexto 
+            var context = services.GetService<AppDbContext>();
 
-            string carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();   
+            //obtem ou gera o Id do carrinho
+            string carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();
 
+            //atribui o id do carrinho na Sessão
+            session.SetString("CarrinhoId", carrinhoId);
+
+            //retorna o carrinho com o contexto e o Id atribuido ou obtido
             return new CarrinhoCompra(context)
             {
                 CarrinhoCompraId = carrinhoId
@@ -83,10 +88,9 @@ namespace Grandion_Fast_Food.Models
         {
             return CarrinhoCompraItems ??
                    (CarrinhoCompraItems =
-                       _context.CarrinhoCompraItens
-                       .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
-                       .Include(s => s.Lanche)
-                       .ToList());
+                       _context.CarrinhoCompraItens.Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
+                           .Include(s => s.Lanche)
+                           .ToList());
         }
 
         public void LimparCarrinho()
@@ -104,6 +108,5 @@ namespace Grandion_Fast_Food.Models
                 .Select(c => c.Lanche.Preco * c.Quantidade).Sum();
             return total;
         }
-
     }
 }

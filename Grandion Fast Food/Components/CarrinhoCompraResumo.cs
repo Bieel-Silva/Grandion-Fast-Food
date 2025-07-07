@@ -16,6 +16,9 @@ namespace Grandion_Fast_Food.Components
         public IViewComponentResult Invoke()
         {
             var itens = _carrinhoCompra.GetCarrinhoCompraItens();
+
+           
+
             _carrinhoCompra.CarrinhoCompraItems = itens;
 
             var carrinhoCompraVM = new CarrinhoCompraViewModel
@@ -25,7 +28,7 @@ namespace Grandion_Fast_Food.Components
             };
 
             return View(carrinhoCompraVM);
-
         }
     }
 }
+ 

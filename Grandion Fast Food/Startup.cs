@@ -27,7 +27,7 @@ namespace Grandion_Fast_Food
             services.AddScoped<ILancheRepository, LancheRepository>();
             services.AddTransient<ICategoriarepository, CategoriaRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
-            services.AddScoped(sp => CarrinhoCompra.GetCarrinhoCompra(sp));
+            services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
             services.AddControllersWithViews();
             services.AddMemoryCache();
@@ -58,9 +58,15 @@ namespace Grandion_Fast_Food
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                   name: "categoriaFiltro",
+                   pattern: "Lanche/{action}/{categoria?}",
+                   defaults: new { Controller = "Lanche", action = "List" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }
