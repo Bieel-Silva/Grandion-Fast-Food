@@ -1,6 +1,7 @@
 ﻿using Grandion_Fast_Food.Models;
 using Grandion_Fast_Food.Repositories.Interfaces;
 using Grandion_Fast_Food.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Grandion_Fast_Food.Controllers
@@ -30,6 +31,7 @@ namespace Grandion_Fast_Food.Controllers
 
             return View(carrinhoCompraVM);
         }
+        [Authorize]
         public IActionResult AdicionarItemNoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches
@@ -41,7 +43,7 @@ namespace Grandion_Fast_Food.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public IActionResult RemoverItemDoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches

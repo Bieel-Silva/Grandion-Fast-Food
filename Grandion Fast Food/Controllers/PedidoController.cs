@@ -1,5 +1,6 @@
 ﻿using Grandion_Fast_Food.Models;
 using Grandion_Fast_Food.Repositores.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Grandion_Fast_Food.Controllers
@@ -14,11 +15,13 @@ namespace Grandion_Fast_Food.Controllers
             _pedidoRepository = pedidoRepository;
             _carrinhoCompra = carrinhoCompra;
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Checkout()
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public IActionResult Checkout (Pedido pedido)
         {

@@ -1,4 +1,5 @@
 ﻿using Grandion_Fast_Food.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,13 +10,13 @@ namespace Grandion_Fast_Food.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager, 
+        public AccountController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
             return View(new LoginViewModel()
@@ -23,7 +24,7 @@ namespace Grandion_Fast_Food.Controllers
                 ReturnUrl = returnUrl
             });
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
@@ -47,8 +48,54 @@ namespace Grandion_Fast_Food.Controllers
             ModelState.AddModelError("", "Falha ao realizar o login!!");
             return View(loginVM);
         }
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(LoginViewModel registroVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = registroVM.UserName };
+                var result = await _userManager.CreateAsync(user, registroVM.Password);
+
+                if (result.Succeeded)
+                {
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _userManager.AddToRoleAsync(user, "Member");
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    this.ModelState.AddModelError("Registro", "Falha ao registrar o usuário");
+                }
+            }
+            return View(registroVM);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.User = null;
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+
+
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
 
-    
+
+
+
 
