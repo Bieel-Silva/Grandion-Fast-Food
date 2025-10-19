@@ -1,9 +1,11 @@
 ﻿using Grandion_Fast_Food.Areas.Admin.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Grandion_Fast_Food.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminRelatorioVendasController : Controller
     {
         private readonly RelatorioVendasService relatorioVendasService;

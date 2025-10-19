@@ -24,11 +24,6 @@ namespace Grandion_Fast_Food.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminLanches
-        //public async Task<IActionResult> Index()
-        // {
-        //    var appDbContext = _context.Lanches.Include(l => l.Categoria);
-        //   return View(await appDbContext.ToListAsync());
-        // }
         public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Nome")
         {
             var resultado = _context.Lanches.Include(l => l.Categoria).AsQueryable();
@@ -41,11 +36,10 @@ namespace Grandion_Fast_Food.Areas.Admin.Controllers
             var model = await PagingList.CreateAsync(resultado, 3, pageindex, sort, "Nome");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } };
             return View(model);
+        }
 
-
-
-            // GET: Admin/AdminLanches/Details/5
-            public async Task<IActionResult> Details(int? id)
+        // GET: Admin/AdminLanches/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -71,8 +65,6 @@ namespace Grandion_Fast_Food.Areas.Admin.Controllers
         }
 
         // POST: Admin/AdminLanches/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LancheId,Nome,DescricaoCurta,DescricaoDetalhada,Preco,ImagemUrl,ImagemThumbnailUrl,IsLanchePreferido,EmEstoque,CategoriaId")] Lanche lanche)
@@ -105,8 +97,6 @@ namespace Grandion_Fast_Food.Areas.Admin.Controllers
         }
 
         // POST: Admin/AdminLanches/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LancheId,Nome,DescricaoCurta,DescricaoDetalhada,Preco,ImagemUrl,ImagemThumbnailUrl,IsLanchePreferido,EmEstoque,CategoriaId")] Lanche lanche)
